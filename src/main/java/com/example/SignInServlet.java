@@ -2,9 +2,7 @@ package com.example;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,9 +18,11 @@ public class SignInServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (login.equals("abzal@gmail.com") && password.equals("password")){
-            out.println("<h1>Welcome, " + login + "</h1><br>");
-            out.println("<h2>Your password: " + password + "</h2><br>");
-            out.println("Go to <a href='mainPage.jsp'>Main page</a>");
+            HttpSession session = request.getSession();
+            session.setAttribute("email", "aitmolda");
+            Cookie user = new Cookie("email", login);
+            response.addCookie(user);
+            response.sendRedirect("welcomeBack.jsp");
         }else{
             out.println("<h2>Incorrect! Try again or register.</h1><br>");
             out.println("Go to <a href='mainPage.jsp'>Main page</a>");
